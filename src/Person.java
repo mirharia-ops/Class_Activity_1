@@ -3,7 +3,7 @@ abstract class Person {
     private int age;
     private String phone;
 
-    // ✅ THIS CONSTRUCTOR MUST EXIST
+    
     public Person(String name, int age, String phone) {
         this.name = name;
         this.age = age;

@@ -1,42 +1,96 @@
+import java.util.*;
+
 public class HospitalMain {
     public static void main(String[] args) {
 
-        // Creating Doctor object
+        Scanner sc = new Scanner(System.in);
+
+        // ================= HARDCODED DOCTOR =================
         Doctor d1 = new Doctor(
                 "Dr. Chandni", 30, "0712345678",
-                "D101", 120000, "Cardiology");
+                "D101", 120000, "Cardiology"
+        );
 
-        // Creating Nurse object
-        Nurse n1 = new Nurse(
-                "Mary", 29, "0723456789",
-                "N201", 60000, "Night");
+        try {
+            // ================= PATIENT INPUT =================
+            System.out.println("Enter Patient Details:");
 
-        // Creating Patient object
-        Patient p1 = new Patient(
-                "Mir", 19, "0734567890",
-                "P301", "Malaria", 10000);
+            // NAME (letters only)
+            System.out.print("Name: ");
+            String pName = sc.nextLine();
+            if (!pName.matches("[a-zA-Z ]+")) {
+                throw new Exception("Name must contain letters only!");
+            }
 
-        // Creating Appointment
-        Appointment a1 = new Appointment("A401", 2500);
+            // AGE (positive number)
+            System.out.print("Age: ");
+            int pAge = sc.nextInt();
+            sc.nextLine();
+            if (pAge <= 0) {
+                throw new Exception("Age must be positive!");
+            }
 
-        // Demonstrating Inheritance & Method Overriding
-        d1.displayDetails();
-        d1.performDuties();
-        d1.scheduleAppointment("25/02/2026");
+            // PHONE (numbers only, 10 digits)
+            System.out.print("Phone Number: ");
+            String pPhone = sc.nextLine();
+            if (!pPhone.matches("\\d{10}")) {
+                throw new Exception("Phone must be 10 digits!");
+            }
 
-        System.out.println();
+            // PATIENT ID (not empty)
+            System.out.print("Patient ID: ");
+            String pId = sc.nextLine();
+            if (pId.isEmpty()) {
+                throw new Exception("Patient ID cannot be empty!");
+            }
 
-        n1.displayDetails();
-        n1.performDuties();
+            // DISEASE (letters only)
+            System.out.print("Disease: ");
+            String disease = sc.nextLine();
+            if (!disease.matches("[a-zA-Z ]+")) {
+                throw new Exception("Disease must contain letters only!");
+            }
 
-        System.out.println();
+            Patient p1 = new Patient(pName, pAge, pPhone, pId, disease, 10000);
 
-        p1.displayDetails();
-        System.out.println("Treatment Bill: " + p1.calculateBill());
+            // ================= APPOINTMENT INPUT =================
+            System.out.println("\nEnter Appointment Details:");
 
-        System.out.println();
+            System.out.print("Appointment ID: ");
+            String appId = sc.nextLine();
+            if (appId.isEmpty()) {
+                throw new Exception("Appointment ID cannot be empty!");
+            }
 
-        a1.showAppointment();
-        System.out.println("Consultation Fee: " + a1.calculateBill());
+            Appointment a1 = new Appointment(appId, 2500);
+
+            // ================= OUTPUT =================
+            System.out.println("\n===== OUTPUT =====");
+
+            // Doctor info
+            d1.displayDetails();
+            d1.performDuties();
+            d1.scheduleAppointment("User-defined");
+
+            System.out.println();
+
+            // Patient info
+            p1.displayDetails();
+            System.out.println("Treatment Bill: " + p1.calculateBill());
+
+            System.out.println();
+
+            // Appointment info
+            a1.showAppointment();
+            System.out.println("Consultation Fee: " + a1.calculateBill());
+
+        } catch (InputMismatchException e) {
+            System.out.println("❌ Invalid input type! Please enter correct data.");
+        } catch (Exception e) {
+            System.out.println("❌ " + e.getMessage());
+        } finally {
+            sc.close();
+            System.out.println("\nRegistration confirmed.");
+        }
     }
 }

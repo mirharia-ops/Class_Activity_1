@@ -1,3 +1,4 @@
+
 abstract class Staff extends Person {
     private String staffId;
     private double salary;

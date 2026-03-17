@@ -14,7 +14,7 @@ public class Doctor extends Staff implements Schedulable {
 
     @Override
     public void performDuties() {
-        System.out.println("Doctor treats patients.");
+        System.out.println("Doctor is treating patient.");
     }
 
     @Override
